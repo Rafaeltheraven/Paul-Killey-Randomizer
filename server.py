@@ -3,16 +3,17 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from bottle import route, run, get, default_app, response
 import random
 import json
+import api
 PORT_NUMBER = 8890
-SPOTIPY_CLIENT_ID = '1966863ffee1447487dd26e031db4d64'
-SPOTIPY_CLIENT_SECRET = "e68f42eff93b4d19905cf30dc1496d97"
-client_credentials_manager = SpotifyClientCredentials("1300bfed2ce24c1b887a352c1b79af89", "c465a9558e1f4f2bb7ad3ae4208aeee6")
+SPOTIPY_CLIENT_ID = api.get_public_key()
+SPOTIPY_CLIENT_SECRET = api.get_private_key()
+client_credentials_manager = SpotifyClientCredentials(SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 @route('/', method="GET")
 def start():
 	print("Got a request!")
-	results = sp.user_playlist("21pjjh7lp7b64noigouwmszea", "2KP4hhopN5IaNKexMlyCBR", fields="tracks, next")
+	results = sp.user_playlist("21pjjh7lp7b64noigouwmszea", api.get_playlist_id(), fields="tracks, next")
 	i = 0
 	end = False
 	all_tracks = []
