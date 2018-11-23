@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Paul Killey Pringcocks Randomizer</title>
+	<script>
+		console.log("In script tag");
+		function start() {
+			console.log("Starting");
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var div = document.getElementById('result');
+					div.innerHTML = "<p><b> Speel eens: " + this.responseText + "</b></p>";
+				}
+			};
+			console.log("sending");
+			xhttp.open("GET", "https://pkp.thebias.nl/random", true);
+			xhttp.send();
+		}
+
+		window.onload = start;
+	</script>
+	<style>
+	.fullscreenDiv {
+		width: 100%;
+		height: auto;
+		bottom: 0px;
+		top: 0px;
+		left: 0;
+		position: absolute;
+	}
+	#result {
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 300%;
+	}
+	</style>
+</head>
+<body>
+	<div class = 'fullscreenDiv'>
+		<div id = "result">
+			<p><b>Loading...</b></p>
+		</div>
+	</div>
+</body>
+</html>
